@@ -123,7 +123,7 @@ def save():
         booked_resource = Resource.query.filter(Resource.id==reference.resource_id).first()
         if (booked_resource is not None):
             booked_resource.available = booked_resource.available + 1 
-            application.logger.info('Return slot for Resource ID: %r' % booked_resource.id)
+            print('[INFO] Return Resource ID: %r for Reference ID: %s' % (booked_resource.id, r_id))
             db.session.commit()
 
     resource = Resource.query.filter(Resource.id==r_id).first()
@@ -140,7 +140,7 @@ def save():
             
         resource.available = resource.available - 1 
 
-        application.logger.info('Draw down from Resource ID: %s for Reference ID: %s' % (r_id, reference.id))
+        print('[INFO] Draw down from Resource ID: %s for Reference ID: %s' % (r_id, reference.id))
 
         db.session.commit()
         flash('Thank you for your submission.  Your session on %s at %s is confirmed.' %
@@ -172,7 +172,7 @@ def get_gcal_url(location, dt_str):
         "Shenton Way":"50%20Robinson%20Road%20%2301-03%20Robinson%20Suites%20S%28068882%29",
         "Tanjong Pagar":"10%20Anson%20Road%20%2336-01%20International%20Plaza%20S%28079903%29",
         "Toa Payoh":"Blk%20126%Lorong%201%20Toa%20Payoh%20%2301-561%20S%28310126%29",
-        "Toh Yi Drive":"Blk%2018%20Toh%20Yi%20Drive%20%2301-103%20S%28590018%29",
+        "Toh Yi":"Blk%2018%20Toh%20Yi%20Drive%20%2301-103%20S%28590018%29",
         "Woodlands":"30%20Woodlands%20Ave%202%20%2301-47%2F48%2F49%20Woodlands%20MRT%20Station%20S%28738343%29",
         "Seletar Mall":"33%20Sengkang%20West%20Ave%20%2301-54%2F55%20The%20Seletar%20Mall%20S%2879765%29",
         "Sentosa (RWS)":"26%20Sentosa%20Gateway%20%23B2-01%20Resort%20World%20At%20Sentosa%20S%28098138%29",

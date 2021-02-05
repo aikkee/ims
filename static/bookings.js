@@ -28,7 +28,7 @@ $(function() {
     "Shenton Way":"50 Robinson Road",
     "Tanjong Pagar":"10 Anson Road",
     "Toa Payoh":"Blk 126 Lorong 1",
-    "Toh Yi Drive":"Blk 18 Toh Yi Drive",
+    "Toh Yi":"Blk 18 Toh Yi Drive",
     "Woodlands":"Woodlands MRT",
     "Seletar Mall":"33 Sengkang West Ave",
     "Sentosa (RWS)":"26 Sentosa Gateway (#B2-01)",
@@ -60,7 +60,7 @@ $(function() {
     "Shenton Way": "No",
     "Tanjong Pagar": "Yes",
     "Toa Payoh":"No",
-    "Toh Yi Drive": "No",
+    "Toh Yi": "No",
     "Woodlands": "No",
     "Sentosa (RWS)":"No",
     "Yishun Ring":"No"
