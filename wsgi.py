@@ -105,12 +105,11 @@ def init():
 @application.route('/save', methods=['POST'])
 def save():
 
-    if (request.form.get('date_time')==""):
-        flash('Both fields are required.')
-        return redirect(redirect_url())
-
     b_ref = request.form.get('booking_ref')
     r_id = request.form.get('date_time', type=int)
+    if (b_ref is None or r_id is None):
+        flash('Both fields are required.')
+        return redirect(redirect_url())
 
     # Release booking slot, retrieve booking_ref record 
     reference = Reference.query.filter(Reference.booking_ref==b_ref).first()
@@ -119,12 +118,14 @@ def save():
         flash("An error occurred when processing your booking, please try again using the link in your SMS again.")
         return render_template('error.html')
 
+    """
     if (reference.resource_id is not None):
         booked_resource = Resource.query.filter(Resource.id==reference.resource_id).first()
         if (booked_resource is not None):
             booked_resource.available = booked_resource.available + 1 
-            print('[INFO] Return Resource ID: %r for Reference ID: %s' % (booked_resource.id, r_id))
+            print('[INFO] Return Resource ID: %r for Reference ID: %r, Booking_Ref: %s' % (booked_resource.id, reference.id, b_ref))
             db.session.commit()
+    """
 
     resource = Resource.query.filter(Resource.id==r_id).first()
     if (resource.available == 0):
@@ -134,10 +135,15 @@ def save():
         b = [{'ref':b_ref, 'label':'OK'}]
         return render_template('fully_booked.html', message=m, buttons=b)
     else:
+        # return slot
+        if (reference.resource_id is not None):
+            booked_resource = Resource.query.filter(Resource.id==reference.resource_id).first()
+            if (booked_resource is not None):
+                booked_resource.available = booked_resource.available + 1 
+                print('[INFO] Return Resource ID: %r for Reference ID: %r, Booking_Ref: %s' % (booked_resource.id, reference.id, b_ref))
         # update new booking
         reference.resource_id = r_id
         reference.update_on = datetime.datetime.now()
-            
         resource.available = resource.available - 1 
 
         print('[INFO] Draw down from Resource ID: %s for Reference ID: %s' % (r_id, reference.id))
@@ -178,8 +184,8 @@ def get_gcal_url(location, dt_str):
         "Sentosa (RWS)":"26%20Sentosa%20Gateway%20%23B2-01%20Resort%20World%20At%20Sentosa%20S%28098138%29",
         "Yishun Central":"Blk%20160%20Yishun%20St%2011%20%2301-200%20S%28760160%29",
         "Yishun Ring":"Blk%20598%20Yishun%20Ring%20Road%20Wisteria%20Mall%20%23B1-09%20S%28768698%29",
-        "SCDF HQ Med Center":"91%20Ubi%20Ave%204%20S%28408827%29",
-        "CDA Med Center":"101%20Jalan%20Bahar%20S%28649734%29"}
+        "SCDF HQ":"91%20Ubi%20Ave%204%20S%28408827%29",
+        "CDA":"101%20Jalan%20Bahar%20S%28649734%29"}
 
     try:
         start_dt = datetime.datetime.strptime(dt_str, '%d %b %Y - %I.%M%p')

@@ -34,9 +34,9 @@ $(function() {
     "Sentosa (RWS)":"26 Sentosa Gateway (#B2-01)",
     "Yishun Central":"Blk 160 Yishun St 11",
     "Yishun Ring":"Blk 598 Wisteria Mall (#B1-09)",
-    "SCDF HQ Med Center":"91 Ubi Ave 4 S(408827)",
-    "CDA Med Center":"101 Jalan Bahar S(649734)",
-    "HTA Med Center":"501 Old Choa Chu Kang Rd S(698928)"}
+    "SCDF HQ":"91 Ubi Ave 4 S(408827)",
+    "CDA":"101 Jalan Bahar S(649734)",
+    "HTA":"501 Old Choa Chu Kang Rd S(698928)"}
   
   var ladyDoc = {
     "Alexandra Road": "No",
